@@ -1,0 +1,29 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- azure-pipe
+
+pool:
+    vmImage: 'Ubuntu-16.04'
+
+strategy:
+    matrix:
+        aarch64:
+            TERMUX_CI_ARCH: 'aarch64'
+        arm:
+            TERMUX_CI_ARCH: 'arm'
+        i686:
+            TERMUX_CI_ARCH: 'i686'
+        x86_64:
+            TERMUX_CI_ARCH: 'x86_64'
+
+steps:
+- script: |
+    apt-get update && apt-get upgrade
+    apt-get -y sudo
+    scripts/setup-ubuntu.sh
+    scripts/setup-android-sdk.sh
+    ./build-all.sh -a $TERMUX_CI_ARCH
