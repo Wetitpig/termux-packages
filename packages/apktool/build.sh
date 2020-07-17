@@ -11,6 +11,7 @@ TERMUX_PKG_PLATFORM_INDEPENDENT=true
 termux_step_extract_package() {
 	mkdir -p "$TERMUX_PKG_SRCDIR" && cd "$TERMUX_PKG_SRCDIR"
 	termux_download $TERMUX_PKG_SRCURL apktool-raw.jar $TERMUX_PKG_SHA256
+	zip -d apktool-raw.jar prebuilt/*
 }
 
 termux_step_pre_configure() {
@@ -33,7 +34,12 @@ termux_step_make() {
 
 termux_step_make_install() {
 	cd $TERMUX_PKG_TMPDIR
-	jar cf apktool.jar classes.dex
+	unzip "$TERMUX_PKG_SRCDIR"/apktool-raw.jar \
+		-x "*.class" \
+		-x "*.jar" \
+		-x "pom.*" \
+		-x "META-INF/*"
+	jar cf apktool.jar *
 	mv apktool.jar $TERMUX_PREFIX/share/dex/apktool.jar
 
 	cat <<- EOF > ${TERMUX_PREFIX}/bin/apktool
