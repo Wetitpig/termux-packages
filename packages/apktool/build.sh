@@ -24,7 +24,8 @@ termux_step_make() {
 	cd "$TERMUX_PKG_SRCDIR"
 	./gradlew build shadowJar
 	mv brut.apktool/apktool-cli/build/libs/apktool-cli-all.jar apktool-cli-all.jar
-	zip -d apktool-cli-all.jar prebuilt/*
+	unzip apktool-cli-all.jar -d $TERMUX_PKG_TMPDIR brut/androlib/android-framework.jar
+	zip -d apktool-cli-all.jar prebuilt/* brut/androlib/android-framework.jar
 	mkdir -p $PREFIX/share/dex
 	$TERMUX_D8 \
 		--classpath $ANDROID_HOME/platforms/android-$TERMUX_PKG_API_LEVEL/android.jar \
@@ -38,7 +39,6 @@ termux_step_make_install() {
 	cd $TERMUX_PKG_TMPDIR
 	unzip "$TERMUX_PKG_SRCDIR"/apktool-cli-all.jar \
 		-x "*.class" \
-		-x "*.jar" \
 		-x "pom.*" \
 		-x "META-INF/*"
 	jar cf apktool.jar *
