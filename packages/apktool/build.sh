@@ -41,7 +41,7 @@ termux_step_make_install() {
 	dalvikvm \
 		-Xmx512m \
 		-cp ${TERMUX_PREFIX}/share/dex/apktool.jar \
-		brut.apktool.Main --aapt ${TERMUX_PREFIX}/bin/aapt "\$@"
+		brut.apktool.Main "\$1" --aapt ${TERMUX_PREFIX}/bin/aapt \$\(shift; echo "\$@"\)
 	EOF
 	chmod +x ${TERMUX_PREFIX}/bin/apktool
 }
