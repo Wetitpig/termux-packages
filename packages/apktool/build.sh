@@ -35,12 +35,13 @@ termux_step_make_install() {
 	cd $TERMUX_PKG_TMPDIR
 	jar cf apktool.jar classes.dex
 	mv apktool.jar $TERMUX_PREFIX/share/dex/apktool.jar
-	
-	cat <<- EOF > "$TERMUX_PREFIX"/bin/apktool
+
+	cat <<- EOF > ${TERMUX_PREFIX}/bin/apktool
 	#!${TERMUX_PREFIX}/bin/sh
 	dalvikvm \
 		-Xmx512m \
 		-cp ${TERMUX_PREFIX}/share/dex/apktool.jar \
 		brut.apktool.Main --aapt ${TERMUX_PREFIX}/bin/aapt "\$@"
 	EOF
+	chmod +x ${TERMUX_PREFIX}/bin/apktool
 }
