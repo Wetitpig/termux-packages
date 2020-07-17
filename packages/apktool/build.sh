@@ -7,6 +7,12 @@ TERMUX_PKG_SHA256=6e19c56da880b3ff13fd5cca7c9fcab59bd604a1b8ba6de9be4e66ebc06828
 TERMUX_PKG_DEPENDS="aapt"
 TERMUX_PKG_BUILD_IN_SRC=true
 
+termux_step_post_extract_package() {
+	cd $TERMUX_PKG_BUILDER_DIR
+	sed "s/TERMUX_ARCH_BITS/\"$TERMUX_ARCH_BITS\"/g" OSDetectionRaw.java.patch > OSDetection.java.patch && \
+		rm OSDetectionRaw.java.patch
+}
+
 termux_step_pre_configure() {
 	# Requires Android SDK, not available on device
 	if $TERMUX_ON_DEVICE_BUILD; then

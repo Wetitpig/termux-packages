@@ -1,0 +1,11 @@
+--- brut.j.util/src/main/java/brut/util/OSDetection.java	2019-11-30 00:55:57.000000000 +0800
++++ ../brut.j.util/src/main/java/brut/util/OSDetection.java	2020-07-17 17:24:23.598991950 +0800
+@@ -18,7 +18,7 @@
+ 
+ public class OSDetection {
+     private static String OS = System.getProperty("os.name").toLowerCase();
+-    private static String Bit = System.getProperty("sun.arch.data.model").toLowerCase();
++    private static String Bit = TERMUX_ARCH_BITS;
+ 
+     public static boolean isWindows() {
+         return (OS.contains("win"));
