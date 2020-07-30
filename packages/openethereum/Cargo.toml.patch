@@ -1,0 +1,11 @@
+--- Cargo.toml	2020-07-31 07:57:01.830000000 +0800
++++ ../Cargo.toml	2020-07-31 07:53:23.440000000 +0800
+@@ -61,7 +61,7 @@
+ parity-runtime = "0.1.1"
+ parity-secretstore = { git = "https://github.com/paritytech/secret-store", branch = "v1.x", optional = true }
+ parity-updater = { path = "updater" }
+-parity-util-mem = { version = "0.6.0", features = ["jemalloc-global"] }
++parity-util-mem = { version = "0.6.0", features = ["dlmalloc-global"] }
+ parity-version = { path = "util/version" }
+ parking_lot = "0.10.0"
+ regex = "1.0"
